@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: hop-webhook-sink
+    runtime: docker
+    plan: starter # always on; free tier sleeps and Hop's sender times out after 10s
+    healthCheckPath: /healthz
+    envVars:
+      - key: LOG_PATH
+        value: /data/webhooks.jsonl
+      - key: READ_TOKEN
+        generateValue: true
+    disk:
+      name: sink-data
+      mountPath: /data
+      sizeGB: 1
